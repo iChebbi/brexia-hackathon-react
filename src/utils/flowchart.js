@@ -7,8 +7,7 @@ export const addNodeToChart = (model, { name, color = 'darkgrey', posX = 50, pos
   output && newNode.addOutPort('In')
 
   output && newNode.addListener({
-    selectionChanged: e => console.log('selectionChanged', { e }),
+    selectionChanged: eventAction,
   })
   model.addNode(newNode)
-
 }

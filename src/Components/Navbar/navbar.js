@@ -7,8 +7,8 @@ export default function navbar() {
   return (
     <div>
       <AppBar className='navbar' position="static">
-        <Button variant='outlined' color='inherit'>Run</Button>
-        <Button variant='outlined' color='inherit'>Preview</Button>
+        <Button color='inherit'>Run</Button>
+        <Button color='inherit'>Preview</Button>
       </AppBar>
     </div>
   )

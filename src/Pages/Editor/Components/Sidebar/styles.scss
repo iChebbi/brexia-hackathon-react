@@ -22,7 +22,7 @@
     padding: 15px 0;
     .element {
       align-items: center;
-      border: 1px solid black;
+      // border: 1px solid black;
       border-radius: 5px;
       cursor: pointer;
       display: flex;
@@ -30,6 +30,7 @@
       margin: 5px 10px;
       min-width: 50px;
       outline: none;
+      background: none;
     }
   }
   .elements-column {
@@ -39,17 +40,30 @@
       height: 35px;
       width: 150px;
       border-radius: 25px;
+      border: 1px solid black;
     }
   }
   .elements-grid {
     @extend .elements;
+    padding: 15px 25px;
     flex-wrap: wrap;
     .element {
-      height: 80px;
-      // padding: 10px;
-      overflow: hidden;
-      width: 80px;
-      white-space: normal;
+      display: flex;
+      flex-direction: column;
+      width: 60px;
+      box-shadow: none;
+      border: none;
+      .icon {
+        height:  40px;
+        width: 40px;
+      }
+      .element-title {
+        font-size: 10px;
+        width: 70px;
+        word-break: break-all;
+        overflow: hidden;
+        height: 20px;
+      }
     }
   }
 }
