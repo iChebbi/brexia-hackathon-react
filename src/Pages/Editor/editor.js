@@ -1,41 +1,49 @@
 import React, { Component } from 'react'
 import * as SRD from 'storm-react-diagrams'
+import Button from '@material-ui/core/Button'
 
-import Sidebar from 'Components/Sidebar/index'
-import Flowchart from 'Components/flowchart'
+import Sidebar from './Components/Sidebar/index'
+import Flowchart from 'Components/Flowchart'
 
 import './styles.scss'
 
 // Prepare flowchart engine
-const engine = new SRD.DiagramEngine();
-engine.installDefaultFactories();
-const model = new SRD.DiagramModel();
-engine.setDiagramModel(model);
+const engine = new SRD.DiagramEngine()
+engine.installDefaultFactories()
+const model = new SRD.DiagramModel()
+engine.setDiagramModel(model)
 
 
 export default class editor extends Component {
-  addToFlowChart = (nodes = []) => model.addAll(...nodes);
 
-  componentDidMount() {
 
-    //sample node elements
-    const node1 = new SRD.DefaultNodeModel("Node 1", "rgb(0,192,255)");
-    const port1 = node1.addOutPort("Out");
-    node1.setPosition(100, 100);
-
-    const node2 = new SRD.DefaultNodeModel("Node 2", "rgb(192,255,0)");
-    const port2 = node2.addInPort("In");
-    node2.setPosition(400, 100);
-
-    const link1 = port1.link(port2);
-    this.addToFlowChart([node1, node2, link1])
-
+  state = {
+    nodeIsSelected: false,
+    files: [],
   }
+
+  refreshRenderKey = () => this.forceUpdate()
+
+  addFile = e => {
+    const [file] = e
+    console.log({ e })
+    if (file.type !== 'text/csv' && (file.type.split('.')[1] && !file.type.split('.')[1].includes('xls'))) return
+    const newFile = {
+      name: file.name,
+      type: file.type === 'text/csv' ? 'csv' : 'excel'
+    }
+    this.setState(prevState => ({ files: [...prevState.files, newFile] }))
+  }
+
   render() {
+
+    const { nodeIsSelected, files, renderKey } = this.state
+    const sideBarProps = { model, addFile: this.addFile, files, refreshRenderKey: this.refreshRenderKey }
     return (
       <div className='editor'>
-        <Flowchart engine={engine} />
-        <Sidebar />
+        <Flowchart key={renderKey} engine={engine} />
+        <Sidebar {...sideBarProps} />
+        {nodeIsSelected && <Button className='edit-element'>Edit element</Button>}
       </div>
     )
   }

@@ -1,4 +1,14 @@
 .editor {
   display: flex;
   height: calc(100% - 50px);
+
+  .edit-element {
+    background: none;
+    color: white;
+    border: 1px solid white;
+    // border-radius: 25px;
+    position: absolute;
+    top: 70px;
+    right: 320px;
+  }
 }
