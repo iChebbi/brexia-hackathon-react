@@ -1,27 +1,19 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import CssBaseline from '@material-ui/core/CssBaseline'
+
+import Navbar from './Components/Navbar'
+import Editor from './Pages/Editor/index';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <CssBaseline >
+          <Navbar />
+          <Editor />
+        </CssBaseline>
       </div>
-    );
+    )
   }
 }
 

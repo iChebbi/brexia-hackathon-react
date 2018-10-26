@@ -1,0 +1,43 @@
+.sidebar {
+  height: 100%;;
+  width: 300px;
+  border: 1px solid darkgray;
+  text-align: center;
+
+  .title {
+    align-items: center;
+    background-color: darkgray;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    color: white;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .elements {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    min-height: 100px;
+    .element {
+      align-items: center;
+      border: 1px solid black;
+      border-radius: 5px;
+      display: flex;
+      height: 50px;
+      justify-content: center;
+      margin: 5px 10px;
+      min-width: 50px;
+    }
+  }
+  .elements-column {
+    @extend .elements;
+    flex-direction: column;
+  }
+  .elements-grid {
+    @extend .elements;
+    flex-wrap: wrap;
+  }
+}

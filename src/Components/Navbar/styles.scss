@@ -1,0 +1,15 @@
+.navbar {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  color: white;
+  height: 50px;
+  padding: 20px 30px;
+  &.MuiAppBar-colorPrimary-8 {
+    background-color: #2196f3 !important;
+  }
+  .MuiButton-outlined-45 {
+    border-color: white;
+  }
+}
