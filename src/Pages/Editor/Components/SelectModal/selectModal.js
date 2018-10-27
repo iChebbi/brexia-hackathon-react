@@ -6,14 +6,15 @@ import Button from '@material-ui/core/Button'
 import DialogContent from '@material-ui/core/DialogContent'
 import Chip from '@material-ui/core/Chip';
 
-
 import './styles.scss'
 
 export default class selectModal extends Component {
 
   state = {
     searchKeyword: '',
-    operations: []
+    input: '',
+    operations: [],
+    checkedColumns: {}
   }
 
   filteredColumns = (colmuns, keyword) => {
@@ -24,7 +25,8 @@ export default class selectModal extends Component {
 
   addOperation = e => {
     e.persist()
-    this.setState(prevState => ({ operations: [...prevState.operations, e.target.innerText] }))
+    const operation = e.target.innerText === 'add' ? this.state.input : e.target.innerText
+    this.setState(prevState => ({ operations: [...prevState.operations, operation], input: '' }))
   }
 
   removeOperation = (e, key) => {
@@ -34,15 +36,28 @@ export default class selectModal extends Component {
   }
 
   saveHandler = () => {
-    const { saveInstruction, modalData, toggleModal } = this.props
-    const { operations } = this.state
-    saveInstruction(operations.join(' '), modalData.id)
+    const { modalData, toggleModal } = this.props
+    const { operations, checkedColumns } = this.state
+    const columns = Object.keys(checkedColumns).map(el => el).join(', ') //build comma separated column list
+    const query = `SELECT ${columns} FROM ${modalData.sourceName} ${operations.join(' ')}` //build query
+    console.log({ modalData })
+    console.log(this.props.model)
+    this.props.model.nodes[modalData.id].extras = {
+      outColumn: checkedColumns,
+      query
+    }
     toggleModal()
   }
 
+  handleCheckbox = e => {
+    const newCheckedColumns = this.state.checkedColumns
+    newCheckedColumns[e.target.name] = e.target.checked
+    this.setState({ checkedColumns: newCheckedColumns })
+  }
+
   render() {
-    const { isOpen, toggleModal, columns } = this.props
-    const { searchKeyword, operations } = this.state
+    const { isOpen, toggleModal, modalData } = this.props
+    const { searchKeyword, operations, checkedColumns } = this.state
     return (
       <div >
         <Dialog
@@ -60,12 +75,12 @@ export default class selectModal extends Component {
               </Button>
             </Toolbar>
           </AppBar>
-          <DialogContent>
+          <DialogContent className='select-diaglog'>
             <div className='select-modal-content' >
               <div className='columns'>
-                <input type='text' onChange={e => this.setState({ searchKeyword: e.target.value })} />
-                {this.filteredColumns(columns, searchKeyword).map((el, key) => <span key={key}>
-                  <input type='checkbox' />
+                <input type='text' className='input-select' onChange={e => e.persist() || this.setState({ searchKeyword: e.target.value })} />
+                {this.filteredColumns(modalData.columns, searchKeyword).map((el, key) => <span key={key}>
+                  <input checked={checkedColumns[el]} name={el} type='checkbox' onChange={this.handleCheckbox} />
                   {' ' + el}
                 </span>)}
               </div>
@@ -117,6 +132,12 @@ export default class selectModal extends Component {
                   <Chip onClick={this.addOperation} className='column' label='/' />
                   <Chip onClick={this.addOperation} className='column' label=')' />
                 </div>
+
+                <div className="row">
+                  <input onChange={e => e.persist() || this.setState({ input: e.target.value })} type="text" className='column input-select' />
+                  <Chip onClick={this.addOperation} label='add' />
+                </div>
+
               </div>
 
             </div>
