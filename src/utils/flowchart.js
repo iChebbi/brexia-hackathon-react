@@ -17,14 +17,12 @@ export const getPreviousNode = currentNode => {
   return linksKey.map(key => currentNode.getOutPorts()[0].links[key].sourcePort.parent)
 }
 
-export const getPreviousNodeColumns = currentNode => {
+export const getNodeColumns = currentNode => {
   if (!currentNode) return []
-
   if (currentNode.extras.nodeType === 'file') {
     return currentNode.extras.columns
   } else {
-    console.log('not a file');
-    return []
+    const columns = currentNode.extras.outColumn
+    return columns ? Object.keys(columns).filter(key => columns[key]) : []
   }
-
 }

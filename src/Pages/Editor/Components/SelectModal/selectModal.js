@@ -36,16 +36,12 @@ export default class selectModal extends Component {
   }
 
   saveHandler = () => {
-    const { modalData, toggleModal } = this.props
+    const { modalData, toggleModal, model } = this.props
     const { operations, checkedColumns } = this.state
     const columns = Object.keys(checkedColumns).map(el => el).join(', ') //build comma separated column list
-    const query = `SELECT ${columns} FROM ${modalData.sourceName} ${operations.join(' ')}` //build query
-    console.log({ modalData })
-    console.log(this.props.model)
-    this.props.model.nodes[modalData.id].extras = {
-      outColumn: checkedColumns,
-      query
-    }
+    const query = `SELECT ${columns} FROM ${modalData.firstSourceName} ${operations.join(' ')}` //build query
+
+    model.nodes[modalData.id].extras = { outColumn: checkedColumns, query }
     toggleModal()
   }
 

@@ -1,0 +1,50 @@
+
+.select-modal {
+  .select-modal-content {
+    background-color: white;
+    display: flex;
+    height: 100%;
+    padding: 20px;
+    padding-top: 80px;
+    .input-select {
+      margin: 2px 5px;
+      border-radius: 20px;
+      border: 1px solid black;
+      padding: 0 10px;
+      outline: none;
+    }
+    .content-section {
+      border: 1px solid gray;
+      display: flex;
+      height: 100%;
+      margin: 5px;
+      padding: 10px 5px;
+    }
+    .columns {
+      @extend .content-section;
+      flex:1;
+      flex-direction: column;
+      input[type=text] {
+        height: 25px;
+        margin-bottom: 10px;
+      }
+    }
+    .input {
+      @extend .content-section;
+      flex:3;
+      .column {
+        flex: unset;
+        flex-basis: unset;
+      }
+    }
+    .operations {
+      @extend .content-section;
+      flex:2;
+      display: unset;
+
+    }
+  }
+  .MuiDialogContent-root-93, .select-diaglog {
+    height: 100%;
+  }
+}
