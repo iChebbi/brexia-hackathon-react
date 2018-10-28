@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import * as SRD from 'storm-react-diagrams'
 import Button from '@material-ui/core/Button'
 
 import Sidebar from './Components/Sidebar/index'
@@ -11,13 +10,6 @@ import { getNodeColumns, getPreviousNode } from 'utils/flowchart';
 
 import './styles.scss'
 import { uploadFile } from 'utils/testUtils';
-
-// Prepare flowchart engine
-const engine = new SRD.DiagramEngine()
-engine.installDefaultFactories()
-const model = new SRD.DiagramModel()
-engine.setDiagramModel(model)
-console.log({ model })
 
 export default class editor extends Component {
 
@@ -53,6 +45,7 @@ export default class editor extends Component {
     ],
     selectModalIsOpen: false,
     combineModalIsOpen: false,
+    groupByModalIsOpen: false,
     modalData: {},
     instructions: []
   }
@@ -62,15 +55,11 @@ export default class editor extends Component {
 
   editNodeHandler = () => {
     const { nodeIsSelected } = this.state
-    const previousNodes = getPreviousNode(nodeIsSelected)
-
-    console.log({ previousNodes })
 
     const firstPreviousNode = getPreviousNode(nodeIsSelected)[0]
     const firstSourceName = firstPreviousNode ? firstPreviousNode.extras.nodeType === 'file' ? firstPreviousNode.name
       : firstPreviousNode.id
       : {}
-
 
     const columns = getNodeColumns(firstPreviousNode)
     switch (nodeIsSelected.name) {
@@ -80,7 +69,7 @@ export default class editor extends Component {
           modalData: {
             ...nodeIsSelected,
             columns,
-            firstNourceName: firstSourceName
+            firstSourceName: firstSourceName
           }
         }))
         break
@@ -101,22 +90,36 @@ export default class editor extends Component {
           }
         }))
         break
+      case 'GroupBy':
+        this.setState(prevState => ({
+          groupByModalIsOpen: !prevState.groupByModalIsOpen,
+          modalData: {
+            ...nodeIsSelected,
+            columns,
+            firstSourceName: firstSourceName
+          }
+        }))
+        break
       default:
     }
   }
 
-  addFile = e => {
-    console.log('dropzone', { files: e })
+  addFile = async e => {
     const [file] = e
 
-    uploadFile(file)
     if (file.type !== 'text/csv' && (file.type.split('.')[1] && !file.type.split('.')[1].includes('xls'))) return
-    const newFile = { name: file.name, type: file.type === 'text/csv' ? 'csv' : 'xlsx' }
+    const type = file.type === 'text/csv' ? 'csv' : 'xlsx'
+
+    const columns = await uploadFile(file.name.split('.')[0], type)
+    console.log({ columns })
+    const newFile = { name: file.name, extension: type, columns }
+
     this.setState(prevState => ({ files: [...prevState.files, newFile] }))
   }
 
   render() {
     const { nodeIsSelected, files, renderKey, selectModalIsOpen, combineModalIsOpen, modalData } = this.state
+    const { model, engine } = this.props
     const sideBarProps = { model, addFile: this.addFile, files, refreshRenderKey: this.refreshRenderKey, updateSeletction: this.updateSeletction }
     const selectModalProps = { isOpen: selectModalIsOpen, toggleModal: this.editNodeHandler, modalData, model }
     const combineModalProps = { isOpen: combineModalIsOpen, toggleModal: this.editNodeHandler, modalData, model }

@@ -2,14 +2,10 @@ import axios from 'axios'
 
 const apiUrl = process.env.REACT_APP_API_URL
 
-export const uploadFile = async file => {
+export const uploadFile = async (file, type) => {
   try {
-    const formData = new FormData()
-    formData.append('file', file)
-
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-
-    const response = await axios.post(apiUrl + '/file', config)
-    console.log({ response })
-  } catch (e) { console.log({ e }) }
+    const response = await axios.get(apiUrl + '/cols/'+ file +'/' + type )
+    console.log({ response: response.data })
+    return response.data.cols
+  } catch (e) { return [] }
 }

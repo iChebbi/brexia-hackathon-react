@@ -15,20 +15,10 @@ import './styles.scss'
 export default class combineModal extends Component {
 
   state = {
-    searchKeyword: '',
-    input: '',
-    operations: [],
-    checkedColumns: {},
-    tableRows: [
-      {
-        input1: 'Test111',
-        input2: 'Test222',
-      },
-      {
-        input1: 'Test111',
-        input2: 'Test222',
-      }
-    ]
+    searchKeywordOne: '',
+    searchKeywordTwo: '',
+    inputOne: [],
+    inputTwo: []
   }
 
   filteredColumns = (colmuns, keyword) => {
@@ -37,42 +27,32 @@ export default class combineModal extends Component {
     return colmuns.filter(e => e.includes(keyword))
   }
 
-  addOperation = e => {
-    e.persist()
-    const operation = e.target.innerText === 'add' ? this.state.input : e.target.innerText
-    this.setState(prevState => ({ operations: [...prevState.operations, operation], input: '' }))
-  }
-
-  removeOperation = (e, key) => {
-    const newOperations = this.state.operations
-    newOperations.splice(key, 1)
-    this.setState({ operations: newOperations })
+  removeInput = (num, key) => {
+    const newInput = this.state[`input${num}`]
+    newInput.splice(key, 1)
+    this.setState({ [`input${num}`]: newInput })
   }
 
   saveHandler = () => {
-    const { modalData, toggleModal } = this.props
-    const { operations, checkedColumns } = this.state
-    const columns = Object.keys(checkedColumns).map(el => el).join(', ') //build comma separated column list
-    const query = `SELECT ${columns} FROM ${modalData.firstSourceName} ${operations.join(' ')}` //build query
-    console.log({ modalData })
-    console.log(this.props.model)
-    this.props.model.nodes[modalData.id].extras = {
-      outColumn: checkedColumns,
-      query
-    }
+    const { modalData, toggleModal, model } = this.props
+    const { inputOne, inputTwo } = this.state
+
+    const arr = inputOne.length >= inputTwo.length ? inputOne : inputTwo
+    const combineTuples = arr.map((e, key) => [inputOne[key], inputTwo[key]])
+
+    const outColumn = [...new Set(modalData.columns.concat(modalData.secondColumns))]
+
+    model.nodes[modalData.id].extras = { outColumn, transformation: 'Combine', tuples: combineTuples }
     toggleModal()
   }
 
-  handleCheckbox = e => {
-    const newCheckedColumns = this.state.checkedColumns
-    newCheckedColumns[e.target.name] = e.target.checked
-    this.setState({ checkedColumns: newCheckedColumns })
+  addInput = (num, e) => {
+    this.setState(prevState => ({ [`input${num}`]: [...prevState[`input${num}`], e] }))
   }
 
   render() {
     const { isOpen, toggleModal, modalData } = this.props
-    const { searchKeyword, tableRows, checkedColumns } = this.state
-    console.log({ modalData })
+    const { searchKeywordOne, searchKeywordTwo, inputOne, inputTwo } = this.state
 
     return (
       <div >
@@ -94,13 +74,8 @@ export default class combineModal extends Component {
           <DialogContent className='select-diaglog'>
             <div className='select-modal-content' >
               <div className='columns'>
-
-                <input type='text' className='input-select' onChange={e => e.persist() || this.setState({ searchKeyword: e.target.value })} />
-                {this.filteredColumns(modalData.columns, searchKeyword).map((el, key) => <span key={key}>
-                  <input checked={checkedColumns[el]} name={el} type='checkbox' onChange={this.handleCheckbox} />
-                  {' ' + el}
-                </span>)}
-
+                <input type='text' className='input-select' onChange={e => e.persist() || this.setState({ searchKeywordOne: e.target.value })} />
+                {this.filteredColumns(modalData.columns, searchKeywordOne).map((el, key) => <div key={key} onClick={e => this.addInput('One', el)} >{el}</div>)}
               </div>
               <div className='input'>
 
@@ -108,17 +83,28 @@ export default class combineModal extends Component {
                   <TableHead>
                     <TableRow>
                       <TableCell>INPUT 1</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {inputOne.map((el, key) => {
+                      return (<TableRow key={key} onClick={() => this.removeInput('One', key)} >
+                        <TableCell>{el}</TableCell>
+                      </TableRow>)
+                    })}
+                  </TableBody>
+                </Table>
+
+                <Table >
+                  <TableHead>
+                    <TableRow>
                       <TableCell>INPUT 2</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {tableRows.map((row, key) => {
-                      return (
-                        <TableRow key={key}>
-                          <TableCell>{row.input1}</TableCell>
-                          <TableCell>{row.input2}</TableCell>
-                        </TableRow>
-                      );
+                    {inputTwo.map((el, key) => {
+                      return (<TableRow key={key} onClick={() => this.removeInput('Two', key)} >
+                        <TableCell>{el}</TableCell>
+                      </TableRow>)
                     })}
                   </TableBody>
                 </Table>
@@ -127,11 +113,8 @@ export default class combineModal extends Component {
 
               <div className='columns'>
 
-                <input type='text' className='input-select' onChange={e => e.persist() || this.setState({ searchKeyword: e.target.value })} />
-                {this.filteredColumns(modalData.secondColumns, searchKeyword).map((el, key) => <span key={key}>
-                  <input checked={checkedColumns[el]} name={el} type='checkbox' onChange={this.handleCheckbox} />
-                  {' ' + el}
-                </span>)}
+                <input type='text' className='input-select' onChange={e => e.persist() || this.setState({ searchKeywordTwo: e.target.value })} />
+                {this.filteredColumns(modalData.secondColumns, searchKeywordTwo).map((el, key) => <div key={key} onClick={e => this.addInput('Two', el)} >{el}</div>)}
 
               </div>
 

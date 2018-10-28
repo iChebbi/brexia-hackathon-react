@@ -10,7 +10,8 @@
     "react-dom": "^16.6.0",
     "react-dropzone": "^7.0.1",
     "react-scripts": "2.0.5",
-    "storm-react-diagrams": "^5.2.1"
+    "storm-react-diagrams": "^5.2.1",
+    "topological-sort": "^0.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

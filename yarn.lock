@@ -9616,6 +9616,11 @@ topo@2.x.x:
   dependencies:
     hoek "4.x.x"
 
+topological-sort@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/topological-sort/-/topological-sort-0.3.0.tgz#3ca539982c71a13f0a7b3be2ad4ae4dd437a1e3b"
+  integrity sha512-BmO2t72jjJ3B9PZC3LTHyojgNynOKEvWG4GiYqyfSMUjtO6+yZK0oozlMYVA+tC6YvS3NZh4OPx6QaolEYOg6A==
+
 tough-cookie@>=2.3.3, tough-cookie@^2.3.4, tough-cookie@^2.4.3, tough-cookie@~2.4.3:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.4.3.tgz#53f36da3f47783b0925afa06ff9f3b165280f781"
