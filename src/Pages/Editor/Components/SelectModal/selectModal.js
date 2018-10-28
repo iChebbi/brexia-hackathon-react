@@ -38,16 +38,15 @@ export default class selectModal extends Component {
   saveHandler = () => {
     const { modalData, toggleModal, model } = this.props
     const { operations, checkedColumns } = this.state
-    const columns = Object.keys(checkedColumns).map(el => el).join(', ') //build comma separated column list
-    const query = `SELECT ${columns} FROM ${modalData.firstSourceName} ${operations.join(' ')}` //build query
-
-    model.nodes[modalData.id].extras = { outColumn: checkedColumns, query }
+    const columns = Object.keys(checkedColumns).filter(el => el.includes(modalData.id)).map(el => (el.slice(el.indexOf('*') + 1))) //build comma separated column list
+    const query = `SELECT ${columns.join(', ')} FROM ${modalData.firstSourceName.split('.')[0]} ${operations.join(' ')}` //build query
+    model.nodes[modalData.id].extras = { outColumn: columns, transformation: 'Select', query }
     toggleModal()
   }
 
-  handleCheckbox = e => {
+  handleCheckbox = (e, nodeId) => {
     const newCheckedColumns = this.state.checkedColumns
-    newCheckedColumns[e.target.name] = e.target.checked
+    newCheckedColumns[nodeId + '*' + e.target.name] = e.target.checked
     this.setState({ checkedColumns: newCheckedColumns })
   }
 
@@ -76,7 +75,7 @@ export default class selectModal extends Component {
               <div className='columns'>
                 <input type='text' className='input-select' onChange={e => e.persist() || this.setState({ searchKeyword: e.target.value })} />
                 {this.filteredColumns(modalData.columns, searchKeyword).map((el, key) => <span key={key}>
-                  <input checked={checkedColumns[el]} name={el} type='checkbox' onChange={this.handleCheckbox} />
+                  <input checked={checkedColumns[modalData.id + '*' + el]} name={el} type='checkbox' onChange={e => this.handleCheckbox(e, modalData.id)} />
                   {' ' + el}
                 </span>)}
               </div>
