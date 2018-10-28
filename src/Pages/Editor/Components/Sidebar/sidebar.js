@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Dropzone from 'react-dropzone'
 
@@ -73,4 +74,12 @@ export default function sidebar({ model, files, addFile, refreshRenderKey, updat
       </div>
     </div>
   )
+}
+
+sidebar.propTypes = {
+  addFile: PropTypes.func.isRequired,
+  files: PropTypes.array.isRequired,
+  model: PropTypes.object.isRequired,
+  refreshRenderKey: PropTypes.func.isRequired,
+  updateSeletction: PropTypes.func.isRequired
 }

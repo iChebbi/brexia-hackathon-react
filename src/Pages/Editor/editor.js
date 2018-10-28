@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 
 import Sidebar from './Components/Sidebar/index'
-import Flowchart from 'Components/Flowchart'
+import Flowchart from './Components/Flowchart'
 
 import SelectModal from './Components/SelectModal';
 import CombineModal from './Components/CombineModal/combineModal';
@@ -12,6 +13,11 @@ import './styles.scss'
 import { uploadFile } from 'utils/testUtils';
 
 export default class editor extends Component {
+
+  static propTypes = {
+    engine: PropTypes.object.isRequired,
+    model: PropTypes.object.isRequired
+  }
 
   state = {
     nodeIsSelected: false,

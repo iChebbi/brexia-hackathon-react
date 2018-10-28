@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -9,6 +10,13 @@ import Chip from '@material-ui/core/Chip';
 import './styles.scss'
 
 export default class selectModal extends Component {
+
+  static propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    modalData: PropTypes.object.isRequired,
+    model: PropTypes.object.isRequired,
+    toggleModal: PropTypes.func.isRequired
+  }
 
   state = {
     searchKeyword: '',

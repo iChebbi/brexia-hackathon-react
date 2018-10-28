@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -13,6 +14,13 @@ import TableRow from '@material-ui/core/TableRow'
 import './styles.scss'
 
 export default class combineModal extends Component {
+
+  static propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    modalData: PropTypes.object.isRequired,
+    model: PropTypes.object.isRequired,
+    toggleModal: PropTypes.func.isRequired
+  }
 
   state = {
     searchKeywordOne: '',

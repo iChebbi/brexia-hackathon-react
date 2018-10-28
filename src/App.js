@@ -11,6 +11,7 @@ const engine = new SRD.DiagramEngine()
 engine.installDefaultFactories()
 const model = new SRD.DiagramModel()
 engine.setDiagramModel(model)
+
 class App extends Component {
   render() {
     return (

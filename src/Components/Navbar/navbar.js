@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
@@ -15,4 +16,8 @@ export default function navbar({ model }) {
       </AppBar>
     </div>
   )
+}
+
+navbar.propTypes = {
+  model: PropTypes.object.isRequired
 }

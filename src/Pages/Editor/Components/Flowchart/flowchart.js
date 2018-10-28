@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { DiagramWidget } from 'storm-react-diagrams'
 
@@ -10,4 +11,8 @@ export default function flowchart({ engine }) {
       <DiagramWidget diagramEngine={engine} />
     </div>
   )
+}
+
+flowchart.propTypes = {
+  engine: PropTypes.object.isRequired
 }
