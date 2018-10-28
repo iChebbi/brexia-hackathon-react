@@ -55,5 +55,8 @@ export const sortGraph = model => {
     }
   }
 
-  console.log({ instructions })
+  console.log('%cLook here !', 'color: red');
+  console.log('%cOrdered transformation instructions queries after traversing graph, to be execueted with Spark', 'color: red')
+  console.log(instructions)
+
 }

@@ -23,7 +23,6 @@ export default function sidebar({ model, files, addFile, refreshRenderKey, updat
       }
     }, updateSeletction)
     refreshRenderKey()
-    console.log({ model })
   }
 
   const addTransformationNodeToChart = (name, color) => {
@@ -38,7 +37,6 @@ export default function sidebar({ model, files, addFile, refreshRenderKey, updat
       }
     }, updateSeletction)
     refreshRenderKey()
-    console.log({ model })
   }
 
   const renderFiles = (files) => files.map((file, key) => {
@@ -67,7 +65,7 @@ export default function sidebar({ model, files, addFile, refreshRenderKey, updat
         <div className="dropzone-container">
           <Dropzone
             onDrop={addFile}
-            onFileDialogCancel={() => console.log('cancel')}
+            onFileDialogCancel={() => {}}
           >
             Drag files here
           </Dropzone>

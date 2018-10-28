@@ -15,31 +15,16 @@ export default class editor extends Component {
 
   state = {
     nodeIsSelected: false,
-    files: [
+    files: [ // Mock files data for testing purposes
       {
         name: 'testFile.csv',
         extension: 'csv',
-        columns: [
-          'Csqdd',
-          'Caaaaa',
-          'Cccccc',
-          'Cttttt',
-          'Copoo',
-          'Coppppp',
-          'Cdsd'
-        ]
+        columns: ['Csqdd', 'Caaaaa', 'Cccccc', 'Cttttt', 'Copoo', 'Coppppp', 'Cdsd']
       },
       {
         name: 'TestFile.xlsx',
         extension: 'xlsx',
-        columns: [
-          'Testsqdd',
-          'Testaaaaa',
-          'TestCccccc',
-          'Testttttt',
-          'Testopoo',
-          'Testoppppp',
-          'Testdsd'
+        columns: ['Testsqdd', 'Testaaaaa', 'TestCccccc', 'Testttttt', 'Testopoo', 'Testoppppp', 'Testdsd'
         ]
       },
     ],
@@ -112,9 +97,10 @@ export default class editor extends Component {
 
     const columns = await uploadFile(file.name.split('.')[0], type)
     console.log({ columns })
-    const newFile = { name: file.name, extension: type, columns }
-
-    this.setState(prevState => ({ files: [...prevState.files, newFile] }))
+    if (columns.length > 0) {
+      const newFile = { name: file.name, extension: type, columns }
+      this.setState(prevState => ({ files: [...prevState.files, newFile] }))
+    }
   }
 
   render() {
