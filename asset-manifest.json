@@ -1,15 +1,15 @@
 {
   "main.css": "/brexia-hackathon-react/static/css/main.d663b440.chunk.css",
-  "main.js": "/brexia-hackathon-react/static/js/main.6d2907c8.chunk.js",
-  "main.js.map": "/brexia-hackathon-react/static/js/main.6d2907c8.chunk.js.map",
+  "main.js": "/brexia-hackathon-react/static/js/main.fbf49878.chunk.js",
+  "main.js.map": "/brexia-hackathon-react/static/js/main.fbf49878.chunk.js.map",
   "static/css/1.f85dc14d.chunk.css": "/brexia-hackathon-react/static/css/1.f85dc14d.chunk.css",
   "static/js/1.7a3644b7.chunk.js": "/brexia-hackathon-react/static/js/1.7a3644b7.chunk.js",
   "static/js/1.7a3644b7.chunk.js.map": "/brexia-hackathon-react/static/js/1.7a3644b7.chunk.js.map",
   "runtime~main.js": "/brexia-hackathon-react/static/js/runtime~main.11d30343.js",
   "runtime~main.js.map": "/brexia-hackathon-react/static/js/runtime~main.11d30343.js.map",
-  "static/css/main.d663b440.chunk.css.map": "/brexia-hackathon-react/static/css/main.d663b440.chunk.css.map",
   "static/css/1.f85dc14d.chunk.css.map": "/brexia-hackathon-react/static/css/1.f85dc14d.chunk.css.map",
+  "static/css/main.d663b440.chunk.css.map": "/brexia-hackathon-react/static/css/main.d663b440.chunk.css.map",
   "index.html": "/brexia-hackathon-react/index.html",
-  "precache-manifest.8ad3f6fc76151f32e63f2a5be5f222b1.js": "/brexia-hackathon-react/precache-manifest.8ad3f6fc76151f32e63f2a5be5f222b1.js",
+  "precache-manifest.8ed97fb9a46fea7fa9994acd972b0910.js": "/brexia-hackathon-react/precache-manifest.8ed97fb9a46fea7fa9994acd972b0910.js",
   "service-worker.js": "/brexia-hackathon-react/service-worker.js"
 }
