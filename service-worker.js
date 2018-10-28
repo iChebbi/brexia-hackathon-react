@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "/brexia-hackathon-react/precache-manifest.9dc53d87d63f27c0c6d05bbe86f9cd1a.js"
+  "/brexia-hackathon-react/precache-manifest.d566f171cf74c1cd392842ca2b01b75c.js"
 );
 
 workbox.clientsClaim();
