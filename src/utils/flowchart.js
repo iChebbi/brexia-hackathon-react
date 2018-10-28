@@ -43,12 +43,11 @@ export const sortGraph = model => {
   })
 
   const sorted = sortOp.sort();
-  // const sortedKeys = [...sorted.keys()]
   const entriesKeys = [...sorted.entries()]
 
   const instructions = []
   for (const el of entriesKeys) {
-    const [key, entity] = el
+    const entity = el.entity
     const { extras } = entity.node
     if (extras.transformation) {
       if (extras.transformation === 'Select') instructions.push({ transformation: extras.transformation, query: extras.query })
