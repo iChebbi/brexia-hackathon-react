@@ -8,16 +8,3 @@ export const uploadFile = async (file, type) => {
     return response.data.cols
   } catch (e) { return [] }
 }
-
-
-export const postInstruction = async (instuctions) => {
-  try {
-    const response = await axios.post(apiUrl + '/gg', {
-      instuctions
-    })
-    console.log({ response })
-    console.log({ data: response.data })
-  } catch (error) {
-
-  }
-}

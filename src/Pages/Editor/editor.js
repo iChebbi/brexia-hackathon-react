@@ -9,9 +9,9 @@ import SelectModal from './Components/SelectModal';
 import CombineModal from './Components/CombineModal/combineModal';
 import { getNodeColumns, getPreviousNode } from 'utils/flowchart';
 
-import './styles.scss'
 import { uploadFile } from 'utils/testUtils';
-import GroupByModal from './Components/GroupByModal/index';
+
+import './styles.scss'
 
 export default class editor extends Component {
 
@@ -109,7 +109,6 @@ export default class editor extends Component {
     const type = file.type === 'text/csv' ? 'csv' : 'xlsx'
 
     const columns = await uploadFile(file.name.split('.')[0], type)
-    console.log({ columns })
     if (columns.length > 0) {
       const newFile = { name: file.name, extension: type, columns }
       this.setState(prevState => ({ files: [...prevState.files, newFile] }))
@@ -117,12 +116,11 @@ export default class editor extends Component {
   }
 
   render() {
-    const { nodeIsSelected, files, renderKey, selectModalIsOpen, combineModalIsOpen, groupByModalIsOpen, modalData } = this.state
+    const { nodeIsSelected, files, renderKey, selectModalIsOpen, combineModalIsOpen, modalData } = this.state
     const { model, engine } = this.props
     const sideBarProps = { model, addFile: this.addFile, files, refreshRenderKey: this.refreshRenderKey, updateSeletction: this.updateSeletction }
     const selectModalProps = { isOpen: selectModalIsOpen, toggleModal: this.editNodeHandler, modalData, model }
     const combineModalProps = { isOpen: combineModalIsOpen, toggleModal: this.editNodeHandler, modalData, model }
-    const groupByModalProps = { isOpen: groupByModalIsOpen, toggleModal: this.editNodeHandler, modalData, model }
 
     return (
       <div className='editor'>
@@ -131,7 +129,6 @@ export default class editor extends Component {
         {nodeIsSelected && <Button onClick={this.editNodeHandler} className='edit-element'>Edit element</Button>}
         <SelectModal {...selectModalProps} />
         <CombineModal {...combineModalProps} />
-        <GroupByModal {...groupByModalProps} />
       </div>
     )
   }

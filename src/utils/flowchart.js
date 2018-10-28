@@ -1,7 +1,6 @@
 import * as SRD from 'storm-react-diagrams'
 import { TopologicalSort } from 'topological-sort'
 import { Map } from 'core-js';
-import { postInstruction } from './testUtils'
 
 export const addNodeToChart = (model, { name, color = 'darkgrey', posX = 50, posY = 50, output = false, extras = {} }, eventAction) => {
   const newNode = new SRD.DefaultNodeModel(name, color)
@@ -59,7 +58,6 @@ export const sortGraph = model => {
   console.log('%cLook here !', 'color: red');
   console.log('%cOrdered transformation instructions queries after traversing graph, to be execueted with Spark', 'color: red')
   console.log(instructions)
-  postInstruction(instructions)
 }
 
 
