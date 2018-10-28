@@ -1,6 +1,7 @@
 import * as SRD from 'storm-react-diagrams'
 import { TopologicalSort } from 'topological-sort'
 import { Map } from 'core-js';
+import { postInstruction } from './testUtils'
 
 export const addNodeToChart = (model, { name, color = 'darkgrey', posX = 50, posY = 50, output = false, extras = {} }, eventAction) => {
   const newNode = new SRD.DefaultNodeModel(name, color)
@@ -50,7 +51,7 @@ export const sortGraph = model => {
     const entity = el[1]
     const { extras } = entity.node
     if (extras.transformation) {
-      if (extras.transformation === 'Select') instructions.push({ transformation: extras.transformation, query: extras.query })
+      if (extras.transformation === 'Select') instructions.push({ transformation: extras.transformation, query: extras.query, type: 'csv' })
       if (extras.transformation === 'Combine') instructions.push({ transformation: extras.transformation, joinColumnTuples: extras.tuples })
     }
   }
@@ -58,5 +59,7 @@ export const sortGraph = model => {
   console.log('%cLook here !', 'color: red');
   console.log('%cOrdered transformation instructions queries after traversing graph, to be execueted with Spark', 'color: red')
   console.log(instructions)
-
+  postInstruction(instructions)
 }
+
+

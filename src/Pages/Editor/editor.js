@@ -11,6 +11,7 @@ import { getNodeColumns, getPreviousNode } from 'utils/flowchart';
 
 import './styles.scss'
 import { uploadFile } from 'utils/testUtils';
+import GroupByModal from './Components/GroupByModal/index';
 
 export default class editor extends Component {
 
@@ -86,7 +87,13 @@ export default class editor extends Component {
           groupByModalIsOpen: !prevState.groupByModalIsOpen,
           modalData: {
             ...nodeIsSelected,
-            columns,
+            columns: [
+              'dsfsdf',
+              'dsfsdf',
+              'dsfsdf',
+              'dsfsdf',
+              'dsfsdf'
+            ],
             firstSourceName: firstSourceName
           }
         }))
@@ -110,11 +117,12 @@ export default class editor extends Component {
   }
 
   render() {
-    const { nodeIsSelected, files, renderKey, selectModalIsOpen, combineModalIsOpen, modalData } = this.state
+    const { nodeIsSelected, files, renderKey, selectModalIsOpen, combineModalIsOpen, groupByModalIsOpen, modalData } = this.state
     const { model, engine } = this.props
     const sideBarProps = { model, addFile: this.addFile, files, refreshRenderKey: this.refreshRenderKey, updateSeletction: this.updateSeletction }
     const selectModalProps = { isOpen: selectModalIsOpen, toggleModal: this.editNodeHandler, modalData, model }
     const combineModalProps = { isOpen: combineModalIsOpen, toggleModal: this.editNodeHandler, modalData, model }
+    const groupByModalProps = { isOpen: groupByModalIsOpen, toggleModal: this.editNodeHandler, modalData, model }
 
     return (
       <div className='editor'>
@@ -123,6 +131,7 @@ export default class editor extends Component {
         {nodeIsSelected && <Button onClick={this.editNodeHandler} className='edit-element'>Edit element</Button>}
         <SelectModal {...selectModalProps} />
         <CombineModal {...combineModalProps} />
+        <GroupByModal {...groupByModalProps} />
       </div>
     )
   }

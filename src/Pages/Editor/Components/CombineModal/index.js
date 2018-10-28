@@ -1,2 +1,2 @@
-import SelectModal from './combineModal'
-export default SelectModal
+import CombineModal from './combineModal'
+export default CombineModal
